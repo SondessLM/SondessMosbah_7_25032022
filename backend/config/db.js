@@ -18,45 +18,45 @@ const dbConfig = {
     }
 }
 
-// const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
-//     host: dbConfig.HOST,
-//     dialect: dbConfig.dialect,
-//     'port' : dbConfig.PORT,
-//     operatorsAliases: 0,
+const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
+    host: dbConfig.HOST,
+    dialect: dbConfig.dialect,
+    'port' : dbConfig.PORT,
+    operatorsAliases: 0,
 
-//     pool: {
-//         max: dbConfig.pool.max,
-//         min: dbConfig.pool.min,
-//         acquire: dbConfig.pool.acquire,
-//         idle: dbConfig.pool.idle
-//     }
-// });
-//         try {
-//             sequelize.authenticate();
-//         console.log('connection reuissie.');
-//         } catch (error) {
-//         console.error('Connexion echouée:', error);
-//         }
+    pool: {
+        max: dbConfig.pool.max,
+        min: dbConfig.pool.min,
+        acquire: dbConfig.pool.acquire,
+        idle: dbConfig.pool.idle
+    }
+});
+        try {
+            sequelize.authenticate();
+        console.log('connection reuissie.');
+        } catch (error) {
+        console.error('Connexion echouée:', error);
+        }
 
-// const db = {};
+const db = {};
 
-// db.Sequelize = Sequelize;
-// db.sequelize = sequelize;
+db.Sequelize = Sequelize;
+db.sequelize = sequelize;
 
-// db.users = require('../models/user')(sequelize, Sequelize);
-// db.posts = require('../models/post')(sequelize, Sequelize);
-// db.likes = require('../models/likes')(sequelize, Sequelize);
-// db.comments = require('../models/comments')(sequelize, Sequelize);
+db.users = require('../models/user')(sequelize, Sequelize);
+db.posts = require('../models/post')(sequelize, Sequelize);
+db.likes = require('../models/likes')(sequelize, Sequelize);
+db.comments = require('../models/comments')(sequelize, Sequelize);
 
-// db.users.hasMany(db.posts)
-// db.posts.belongsTo(db.users, {onDelete: "CASCADE",})
+db.users.hasMany(db.posts)
+db.posts.belongsTo(db.users, {onDelete: "CASCADE",})
 
-// db.posts.hasMany(db.comments)
-// db.comments.belongsTo(db.posts, {onDelete: "CASCADE",})
+db.posts.hasMany(db.comments)
+db.comments.belongsTo(db.posts, {onDelete: "CASCADE",})
 
-// db.users.hasMany(db.comments)
-// db.comments.belongsTo(db.users, {onDelete: "CASCADE",})
+db.users.hasMany(db.comments)
+db.comments.belongsTo(db.users, {onDelete: "CASCADE",})
 
-// db.sequelize.sync();
+db.sequelize.sync();
 
-// module.exports = db;
+module.exports = db;
