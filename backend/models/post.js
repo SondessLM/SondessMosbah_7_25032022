@@ -1,5 +1,3 @@
-const post = require("../routes/user");
-
 module.exports = (sequelize, Sequelize) => {
     const Post = sequelize.define("article", {
       id: {

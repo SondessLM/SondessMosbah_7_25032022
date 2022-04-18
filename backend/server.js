@@ -2,6 +2,9 @@
 const http = require('http');
 const app = require('./app');
 
+require('dotenv').config({ path: './.env' })
+ const db = require("./config/db");    
+
 // optimiser server.js
 const normalizePort = val => {
   const port = parseInt(val, 10);
@@ -14,7 +17,8 @@ const normalizePort = val => {
   }
   return false;
 };
-const port = normalizePort(process.env.PORT || '8000');
+
+const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 // gerer les erreurs
@@ -47,5 +51,7 @@ server.on('listening', () => {
   console.log('Listening on ' + bind);
 });
 
-// ecouter le port en haut
-server.listen(port);
+// Server entry
+db.sequelize.sync().then(() => {
+  server.listen(port);
+});

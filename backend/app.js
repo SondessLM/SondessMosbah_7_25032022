@@ -1,8 +1,3 @@
- // load environment variables from the .env file into process.env
- require('dotenv').config();
-
- //require('./config/db');         
-
 //importer le framework express de node.js (creer des appli web avec node)
 const express = require('express');
 
@@ -28,8 +23,6 @@ const User = require('./models/user');
 
 const mysql = require('mysql2');
 
-//require('./config/db');
-
 //const db = require('./models');
 
 //db.sequelize.sync({force: false});
@@ -42,12 +35,6 @@ const limiter = rateLimit({
   legacyHeaders: false, 
 });
 
-// // conneter à la base de données (BDD)
-db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  database: "groupomania",
-});
 
 const app = express();
 
@@ -86,7 +73,6 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/api/user', user);
 //app.use('/api/post', post);
 //app.use('/api/comment', comment);
-
 
 // exporter le module
 module.exports = app;

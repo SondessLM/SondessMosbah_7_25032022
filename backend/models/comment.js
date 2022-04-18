@@ -1,4 +1,3 @@
-
 module.exports = (sequelize, Sequelize) => {
     const Comment = sequelize.define("commentaire", {
       id: {

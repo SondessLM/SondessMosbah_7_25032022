@@ -1,7 +1,5 @@
-const dbConfig = require('../config/db');
 const Sequelize = require('sequelize');
-const path = require('path');
-require('dotenv').config({ path: '.env' })
+require('dotenv').config({ path: '../.env' })
 
 const dbConfig = {
     HOST: process.env.DB_HOST,
@@ -43,19 +41,18 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.users = require('../models/user')(sequelize, Sequelize);
-db.posts = require('../models/post')(sequelize, Sequelize);
-db.likes = require('../models/likes')(sequelize, Sequelize);
-db.comments = require('../models/comments')(sequelize, Sequelize);
+db.user = require('../models/user')(sequelize, Sequelize);
+db.post = require('../models/post')(sequelize, Sequelize);
+db.comment = require('../models/comment')(sequelize, Sequelize);
 
-db.users.hasMany(db.posts)
-db.posts.belongsTo(db.users, {onDelete: "CASCADE",})
+db.user.hasMany(db.post)
+db.post.belongsTo(db.user, {onDelete: "CASCADE",})
 
-db.posts.hasMany(db.comments)
-db.comments.belongsTo(db.posts, {onDelete: "CASCADE",})
+db.post.hasMany(db.comment)
+db.comment.belongsTo(db.post, {onDelete: "CASCADE",})
 
-db.users.hasMany(db.comments)
-db.comments.belongsTo(db.users, {onDelete: "CASCADE",})
+db.user.hasMany(db.comment)
+db.comment.belongsTo(db.user, {onDelete: "CASCADE",})
 
 db.sequelize.sync();
 
