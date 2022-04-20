@@ -1,41 +1,24 @@
-// importer le package express
-const express = require('express');
+const router = require('express').Router();
 
-// creer des routes individuelles grace router express
-const router = express.Router();
+const userController = require('../controllers/user');
 
-//creer constante pour l'authentification
-const auth = require('../middleware/auth');
+router.post("/user/register", userController.register);
+router.post("/user/login", userController.login);
+router.get('/user/logout', userController.logout);
 
-//creer constante pour gerer les images
-const multer = require('../middleware/multer-config');
-
-//Importer le controller.
-const userCtrl = require('../controllers/user');
+router.get('/user/', userController.getAllUsers);
+router.get('/user/:id', userController.getUser);
+router.put('/user/:id', userController.updateUser);
+router.delete('/user/:id', userController.deleteUser);
 
 //Importer les middleware.
-const validateEmail = require("../middleware/signup/validate-email");
-const validatePassword = require("../middleware/signup/validate-password");
-
+const validateEmail = require("../middleware/user/signup/validate-email");
+const validatePassword = require("../middleware/user/signup/validate-password");
 
 //Routes pour s'inscrire.
-router.post('/signup', validateEmail, validatePassword, userCtrl.signup );
+router.post('/signup', validateEmail, validatePassword, userController.signup );
 
 //Routes pour se connecter.
-router.post('/login', validateEmail, userCtrl.login );
-
-const userCtrl = require('../controllers/user');
-
-//Route pour recupèrer tous les utilisateurs
-router.get('/', auth, userCtrl.getAllUsers);
-
-//Routes pour créer un utilisateur
-router.post('/', auth, multer, userCtrl.createUser);
-
-//Route pour recupèrer utilisateu avec son ID
-router.get('/:id', auth, userCtrl.getOneUser);
-
-//route pour permettre de suprrimer utilsateu
-router.delete('/:id', auth, userCtrl.deleteUser);
+router.post('/login', validateEmail, userController.login );
 
 module.exports = router;

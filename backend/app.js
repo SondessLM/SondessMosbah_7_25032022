@@ -13,22 +13,6 @@ const rateLimit = require('express-rate-limit');
 // configurer de manière appropriée des en-têtes HTTP 
 const helmet = require('helmet');
 
-//const user =  require ('./routes/user');
-
-//const users =   require('./routes/user');
-
-//const post = require('./routes/post');
-
-//const comment= require('./routes/comment');
-
-const User = require('./models/user');
-
-const mysql = require('mysql2');
-
-//const db = require('./models');
-
-//db.sequelize.sync({force: false});
-
 //configurer express rate limit
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
@@ -36,7 +20,6 @@ const limiter = rateLimit({
   standardHeaders: true, // Retourner rate limit info à `RateLimit-*` headers
   legacyHeaders: false, 
 });
-
 
 const app = express();
 
@@ -71,10 +54,15 @@ app.use(bodyParser.urlencoded({ extended: true }))
 // //Gerer les images 
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
-//routes
-app.use('/api/user', User);
-//app.use('/api/post', post);
-//app.use('/api/comment', comment);
+//Routes
+//const userRoutes = require('../routes/user');
+//const postRoutes = require('./routes/post');
+//const commentRoutes = require('./routes/comment');
+
+//Models
+// const User = require('./models/user');
+// const Post = require('./models/post');
+// const Comment = require('./models/comment');
 
 // exporter le module
 module.exports = app;

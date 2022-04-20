@@ -22,6 +22,10 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
     'port' : dbConfig.PORT,
     operatorsAliases: 0,
 
+    define: {
+        freezeTableName: true
+    },
+
     pool: {
         max: dbConfig.pool.max,
         min: dbConfig.pool.min,
