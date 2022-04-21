@@ -33,7 +33,7 @@ exports.register = (req, res, next) => {
         lastName: req.body.lastName,
         email: req.body.email,
         password: hash,
-        status: false,
+        job: false,
     });
     //Enregistrement du nouvel utilisateur dans la BDD.
     user.save()

@@ -18,7 +18,8 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING
     },
     job: {
-      type: Sequelize.STRING
+      type: Sequelize.BOOLEAN,
+      defaultValue: true,
     },
     profile: {
       type: Sequelize.STRING

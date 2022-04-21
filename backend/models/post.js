@@ -5,9 +5,13 @@ module.exports = (sequelize, Sequelize) => {
     },
     medialink: {
       type: Sequelize.STRING,
-    }
+    },
+    like: {
+      type: Sequelize.INTEGER,
+      allowNull: true,
   },
-  );
+});
 
   return post;
 };
+
