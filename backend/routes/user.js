@@ -16,7 +16,7 @@ const validateEmail = require("../middleware/user/signup/validate-email");
 const validatePassword = require("../middleware/user/signup/validate-password");
 
 //Routes pour s'inscrire.
-router.post('/signup', validateEmail, validatePassword, userController.signup );
+router.post('/register', validateEmail, validatePassword, userController.register );
 
 //Routes pour se connecter.
 router.post('/login', validateEmail, userController.login );

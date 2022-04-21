@@ -55,7 +55,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 //Routes
-//const userRoutes = require('../routes/user');
+const userRoutes = require('./routes/user');
 //const postRoutes = require('./routes/post');
 //const commentRoutes = require('./routes/comment');
 
