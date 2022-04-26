@@ -14,10 +14,10 @@ exports.createPost = (req, res, next) => {
     ...postObject,
     imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
     
-    likes: 0,
-    dislikes: 0,
-    usersLiked: [],
-    usersDisliked: []
+    // likes: 0,
+    // dislikes: 0,
+    // usersLiked: [],
+    // usersDisliked: []
   });
   post.save()
     .then(() => res.status(201).json({ message: 'la post est enregistrée !'}))
@@ -125,86 +125,86 @@ exports.getAllPosts = (req, res, next) => {
     }
   );
 };
-// like et dislike des posts
-exports.likepost = (req, res, next) => {
-  let like = req.body.like;
-  let userId = req.body.userId;
-  let postId = req.params.id;
+// // like et dislike des posts
+// exports.likepost = (req, res, next) => {
+//   let like = req.body.like;
+//   let userId = req.body.userId;
+//   let postId = req.params.id;
 
 
-  if (like == 1) {
-     post.findOne({ _id: req.params.id })
-      .then((post) => { 
-        // Liké la post si l'utilisateur n'est pas enregistré dans les Likes
-        if (post.usersLiked.indexOf(userId) == -1 && post.usersDisliked.indexOf(userId) == -1) {
-            post.updateOne({ _id: postId }, {
-            $push: { usersLiked: userId }, $inc: { likes: +1 },
-          })
-            .then(() => res.status(200).json({ 
-              message: 'Like ajouté !'
-            }))
-            .catch((error) => res.status(400).json({
-              error
-            }))
-        } else {
-          //Ajouter un message si l'utilisateur a déjà liké
-         return res.status(403).json({ message: 'Vous avez déjà liké ou disliké le post !' })
-        }
-      }).catch((error) => res.status(400).json({
-        error
-      }))
-  } 
+//   if (like == 1) {
+//      post.findOne({ _id: req.params.id })
+//       .then((post) => { 
+//         // Liké la post si l'utilisateur n'est pas enregistré dans les Likes
+//         if (post.usersLiked.indexOf(userId) == -1 && post.usersDisliked.indexOf(userId) == -1) {
+//             post.updateOne({ _id: postId }, {
+//             $push: { usersLiked: userId }, $inc: { likes: +1 },
+//           })
+//             .then(() => res.status(200).json({ 
+//               message: 'Like ajouté !'
+//             }))
+//             .catch((error) => res.status(400).json({
+//               error
+//             }))
+//         } else {
+//           //Ajouter un message si l'utilisateur a déjà liké
+//          return res.status(403).json({ message: 'Vous avez déjà liké ou disliké le post !' })
+//         }
+//       }).catch((error) => res.status(400).json({
+//         error
+//       }))
+//   } 
 
-  if (like == 0) {
-  post.findOne({ _id: postId })
-    .then((post) => {
-      // Liké la post si l'utilisateur n'est pas enregistré dans les Likes
-      if (post.usersDisliked.indexOf(req.body.userId) != -1) {
-        post.updateOne(
-          { _id: req.params.id },
-          // retrait de l'utilisateur du tableau usersDisliked + décrémentation du dislike
-          {
-            $pull: { usersDisliked: req.body.userId },
-            $inc: { dislikes: -1 },
-          }
-        )
-          .then(() => res.status(200).json({ message: "aucun avis" }))
-          .catch((error) => res.status(400).json({ error }));
-      }
-      // si l'utilisateur est présent dans le tableau des likes
-      if (post.usersLiked.indexOf(req.body.userId) != -1) {
-        post.updateOne(
-          { _id: req.params.id },
-          // Retirer de l'utilisateur du tableau usersliked et suprrimer le like
-          { $pull: { usersLiked: req.body.userId }, $inc: { likes: -1 } }
-        )
-          .then(() => res.status(200).json({ message: "aucun avis" }))
-          .catch((error) => res.status(400).json({ error }));
-      }
-    })
-    .catch((error) => res.status(400).json({ error }));}
+//   if (like == 0) {
+//   post.findOne({ _id: postId })
+//     .then((post) => {
+//       // Liké la post si l'utilisateur n'est pas enregistré dans les Likes
+//       if (post.usersDisliked.indexOf(req.body.userId) != -1) {
+//         post.updateOne(
+//           { _id: req.params.id },
+//           // retrait de l'utilisateur du tableau usersDisliked + décrémentation du dislike
+//           {
+//             $pull: { usersDisliked: req.body.userId },
+//             $inc: { dislikes: -1 },
+//           }
+//         )
+//           .then(() => res.status(200).json({ message: "aucun avis" }))
+//           .catch((error) => res.status(400).json({ error }));
+//       }
+//       // si l'utilisateur est présent dans le tableau des likes
+//       if (post.usersLiked.indexOf(req.body.userId) != -1) {
+//         post.updateOne(
+//           { _id: req.params.id },
+//           // Retirer de l'utilisateur du tableau usersliked et suprrimer le like
+//           { $pull: { usersLiked: req.body.userId }, $inc: { likes: -1 } }
+//         )
+//           .then(() => res.status(200).json({ message: "aucun avis" }))
+//           .catch((error) => res.status(400).json({ error }));
+//       }
+//     })
+//     .catch((error) => res.status(400).json({ error }));}
 
 
 
-  if (like === -1) {
-    post.findOne({ _id: req.params.id })
-      .then((post) => {
-        if (post.usersDisliked.indexOf(userId) == -1 && post.usersLiked.indexOf(userId) == -1) {
-          post.updateOne({ _id: postId }, {
-            $push: { usersDisliked: userId }, $inc: { dislikes: +1 },
-          })
-            .then(() => res.status(200).json({
-              message: 'Dislike ajouté !'
-            }))
-            .catch((error) => res.status(400).json({
-              error
-            }))
-        } else {
-          return res.status(403).json({ message: 'Vous avez déjà liké ou disliké le post !' })
-        }
-      }).catch((error) => res.status(400).json({
-        error
-      }))
-  }
+//   if (like === -1) {
+//     post.findOne({ _id: req.params.id })
+//       .then((post) => {
+//         if (post.usersDisliked.indexOf(userId) == -1 && post.usersLiked.indexOf(userId) == -1) {
+//           post.updateOne({ _id: postId }, {
+//             $push: { usersDisliked: userId }, $inc: { dislikes: +1 },
+//           })
+//             .then(() => res.status(200).json({
+//               message: 'Dislike ajouté !'
+//             }))
+//             .catch((error) => res.status(400).json({
+//               error
+//             }))
+//         } else {
+//           return res.status(403).json({ message: 'Vous avez déjà liké ou disliké le post !' })
+//         }
+//       }).catch((error) => res.status(400).json({
+//         error
+//       }))
+//   }
 
-} 
+// } 

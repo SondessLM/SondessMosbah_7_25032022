@@ -60,9 +60,9 @@ const userRoutes = require('./routes/user');
 //const commentRoutes = require('./routes/comment');
 
 //Models
-// const User = require('./models/user');
-// const Post = require('./models/post');
-// const Comment = require('./models/comment');
+const User = require('./models/user');
+const Post = require('./models/post');
+const Comment = require('./models/comment');
 
 // exporter le module
 module.exports = app;
