@@ -88,95 +88,95 @@ exports.login = (req, res, next) => {
 };
 
 
-// /**
-//  * Logout user.
-//  * @param {*} req 
-//  * @param {*} res 
-//  * @param {*} next 
-//  */
-// exports.logout = (req, res, next) => {
-//   res.clearCookie("jwt");
-//   res.status(200).json("OUT");
-// };
+/**
+ * Logout user.
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
+exports.logout = (req, res, next) => {
+  res.clearCookie("jwt");
+  res.status(200).json("OUT");
+};
 
-// /**
-//  * Get all users.
-//  * @param {*} req 
-//  * @param {*} res 
-//  * @param {*} next 
-//  */
-// exports.getAllUsers = (req, res, next) => {
-//     User.findAll({attributes : ['id', 'email', 'firstName', 'lastName', 'status']})
-//     .then((users) => res.status(200).json(users))
-//         .catch(error => res.status(400).json({ error }));
-// };
+/**
+ * Get all users.
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
+exports.getAllUsers = (req, res, next) => {
+    User.findAll({attributes : ['id', 'email', 'firstName', 'lastName', 'status']})
+    .then((users) => res.status(200).json(users))
+        .catch(error => res.status(400).json({ error }));
+};
 
-// /**
-//  * Get a user.
-//  * @param {*} req 
-//  * @param {*} res 
-//  * @param {*} next 
-//  */
-// exports.getUser = (req, res, next) => {
-//     User.findOne({
-//         where: {id: req.params.id}
-//       })
-//       .then((user) => res.status(200).json(user))
-//       .catch(error => res.status(400).json({error:error}))
-//     };
+/**
+ * Get a user.
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
+exports.getUser = (req, res, next) => {
+    User.findOne({
+        where: {id: req.params.id}
+      })
+      .then((user) => res.status(200).json(user))
+      .catch(error => res.status(400).json({error:error}))
+    };
 
-// /**
-//  * Update a user.
-//  * @param {*} req 
-//  * @param {*} res 
-//  * @param {*} next 
-//  */
-// exports.updateUser = (req, res, next) => {
-//     User.findByPk(req.params.id)
-//     .then((oldUser) => {
-//       if (oldUser.id !== req.auth.userId) {
-//         return res.status(403).json({
-//           error: new Error('Unauthorized request!')
-//         });
-//       }
-//       User.update({ ...req.body}, { where: { id: req.params.id } })
-//             .then(() => res.status(200).json({
-//               message: 'Profil modifié !',
-//               users : {
-//                 firstName: req.body.firstName,
-//                 lastName: req.body.lastName,
-//                 email: req.body.email,
+/**
+ * Update a user.
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
+exports.updateUser = (req, res, next) => {
+    User.findByPk(req.params.id)
+    .then((oldUser) => {
+      if (oldUser.id !== req.auth.userId) {
+        return res.status(403).json({
+          error: new Error('Unauthorized request!')
+        });
+      }
+      User.update({ ...req.body}, { where: { id: req.params.id } })
+            .then(() => res.status(200).json({
+              message: 'Profil modifié !',
+              users : {
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
+                email: req.body.email,
               
-//               }
-//             }))
-//             .catch((error) => res.status(400).json({
-//               error
-//             }))
-//           });
-// };
+              }
+            }))
+            .catch((error) => res.status(400).json({
+              error
+            }))
+          });
+};
 
-// /**
-//  * Delete a user.
-//  * @param {*} req 
-//  * @param {*} res 
-//  * @param {*} next 
-//  */
-// exports.deleteUser = (req, res, next) => {
-//     ser.findOne ({
-//         where: {id :req.params.id}
-//       })
-//       .then(users => {
-//         if (users.id !== req.auth.userId) {
-//           console.log(req.auth.userId);
-//           console.log(users.id);
-//             return res.status(401).json({
-//               error : new Error('requete !')
-//             })
-//           } else {
-//       User.destroy({where: {id: req.params.id}})
-//       .then(() => res.status(200).json({message: 'Compte supprimé !'}))
-//       .catch(error => res.status(400).json({error}));
+/**
+ * Delete a user.
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
+exports.deleteUser = (req, res, next) => {
+    ser.findOne ({
+        where: {id :req.params.id}
+      })
+      .then(users => {
+        if (users.id !== req.auth.userId) {
+          console.log(req.auth.userId);
+          console.log(users.id);
+            return res.status(401).json({
+              error : new Error('requete !')
+            })
+          } else {
+      User.destroy({where: {id: req.params.id}})
+      .then(() => res.status(200).json({message: 'Compte supprimé !'}))
+      .catch(error => res.status(400).json({error}));
          
-//        } })
-//         .catch(error => res.status(500).json({error}));
-//     };
+       } })
+        .catch(error => res.status(500).json({error}));
+    };
